@@ -6,14 +6,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.*;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.BezierCurve;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.BezierLine;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Path;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.PathChain;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Point;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.util.Timer;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.*;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierLine;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
+import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
 import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
 
 import java.util.concurrent.TimeUnit;
