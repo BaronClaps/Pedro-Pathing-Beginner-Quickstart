@@ -203,13 +203,11 @@ public class ExampleAuto_Blue extends OpMode {
     public void setPathState(int pState) {
         pathState = pState;
         pathTimer.resetTimer();
-        autonomousPathUpdate();
     }
 
     public void setActionState(int aState) {
         actionState = aState;
         pathTimer.resetTimer();
-        autonomousActionUpdate();
     }
 
     public void setClawState(int cState) {
