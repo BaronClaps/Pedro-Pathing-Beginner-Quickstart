@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.config.RobotConstants;
 
 public class ClawSubsystem {
 
-    private Servo pivot, clawL, clawR;
+    private Servo pivot, grab;
 
     /** This is the constructor for the subsystem, it maps the servos to the hardwareMap.
      * The device names should align with the configuration names on the driver hub.
@@ -23,50 +23,48 @@ public class ClawSubsystem {
 
     public ClawSubsystem(HardwareMap hardwareMap) {
         pivot = hardwareMap.get(Servo.class, "pivot");
-        clawL = hardwareMap.get(Servo.class, "clawL");
-        clawR = hardwareMap.get(Servo.class, "clawR");
+        grab = hardwareMap.get(Servo.class, "grab");
     }
 
-    //------------------------------Close Claws------------------------------//
-    public void closeLClaw() {
-        clawL.setPosition(RobotConstants.closedL);
+    //------------------------------Grab------------------------------//
+
+    /** This is the closeClaw method, it sets the grab to the closed position defined in RobotConstants. */
+    public void closeClaw() {
+        grab.setPosition(RobotConstants.closedClaw);
     }
 
-    public void closeRClaw() {
-        clawR.setPosition(RobotConstants.closedR);
+    /** This is the openClaw method, it sets the grab to the open position defined in RobotConstants. */
+    public void openClaw() {
+        grab.setPosition(RobotConstants.openClaw);
     }
 
-    public void closeClaws() {
-        clawL.setPosition(RobotConstants.closedL);
-        clawR.setPosition(RobotConstants.closedR);
-    }
+    //------------------------------Pivot------------------------------//
 
-    //------------------------------Open Claws------------------------------//
-    public void openLClaw() {
-        clawL.setPosition(RobotConstants.openL);
-    }
-
-    public void openRClaw() {
-        clawR.setPosition(RobotConstants.openR);
-    }
-
-    public void openClaws() {
-        clawL.setPosition(RobotConstants.openL);
-        clawR.setPosition(RobotConstants.openR);
-    }
-
-    //------------------------------Claw Rotate------------------------------//
-
+    /** This is the startClaw method, it sets the pivot to the start position defined in RobotConstants. */
     public void startClaw() {
         pivot.setPosition(RobotConstants.startClaw);
     }
 
+    /** This is the groundClaw method, it sets the pivot to the ground position defined in RobotConstants. */
     public void groundClaw() {
         pivot.setPosition(RobotConstants.groundClaw);
     }
 
+    /** This is the scoringClaw method, it sets the pivot to the scoring position defined in RobotConstants. */
     public void scoringClaw() {
         pivot.setPosition(RobotConstants.scoringClaw);
+    }
+
+    //------------------------------Getters------------------------------//
+
+    /** This is the getGrabPosition method, it returns the current position of the grab. */
+    public double getGrabPosition() {
+        return grab.getPosition();
+    }
+
+    /** This is the getPivotPosition method, it returns the current position of the pivot. */
+    public double getPivotPosition() {
+        return pivot.getPosition();
     }
 
 }

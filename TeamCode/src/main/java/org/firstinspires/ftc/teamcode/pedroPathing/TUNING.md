@@ -20,7 +20,8 @@ measurements will be in centimeters.
 
 * Next, we need to find the preferred mecanum drive vectors. The rollers on mecanum wheels point at a
   45 degree angle from the forward direction, but the actual direction the force is output is actually
-  closer to forward. To find the direction your wheels will go, you will need to run the
+  closer to forward. Before running any OpModes, make sure your motors are reversed properly in the
+  `Follower` class constructor. To find the direction your wheels will go, you will need to run the
   `Forward Velocity Tuner` and `Strafe Velocity Tuner` OpModes. These will run your robot at full
   power for 40 inches forward and to the right, respectively. The distance can be changed through FTC
   Dashboard under the dropdown for each respective class, but higher distances work better. After the
@@ -34,7 +35,7 @@ measurements will be in centimeters.
   find the rate at which your robot decelerates when power is cut from the drivetrain. This is used to
   get a more accurate estimation of the drive vector. To find this, you will need to run the
   `Forward Zero Power Acceleration Tuner` and the `Lateral Zero Power Acceleration Tuner` OpModes.
-  These will run your robot until it hits a velocity of 10 inches/second forward and to the right,
+  These will run your robot until it hits a velocity of 30 inches/second forward and to the right,
   respectively. The velocity can be changed through FTC Dashboard under the dropdown for each
   respective class, but higher velocities work better. After the velocity has been reached, power will
   be cut from the drivetrain and the robot's deceleration will be tracked until the robot stops, at
@@ -47,12 +48,19 @@ measurements will be in centimeters.
   `lateralZeroPowerAcceleration`, respectively.
 
 * After this, we will want to tune the translational PID. Go to FTC Dashboard and disable all but
-  the `useTranslational` checkboxes under the `Follower` tab. Then, run `StraightBackAndForth`. Make
-  sure you disable the timer on autonomous OpModes. The PID for the translational error is called
-  `translationalPIDF`.  If you need to add a feedforward value, use the `translationalPIDFFeedForward`
-  since that will add the feedforward in the direction the robot is trying to move, rather than the
-  feedforward in the PIDF itself, since those will only add the feedforward one way. You can change
-  the PIDF constants and feedforward values, under the `FollowerConstants` tab in FTC Dashboard.
+  the `useTranslational` checkboxes under the `Follower` tab. Then, run `StraightBackAndForth`.
+  Make sure you disable the timer on autonomous OpModes. You will notice in telemetry a message saying
+  that the robot will travel a distance forward and backward, this will not happen until later, so for
+  now you can ignore this message. The robot should not move when you run the opmode initally. Instead,
+  it should correct when you push it away from its   starting position. Note that this correction should
+  happen regardless of the robot's rotation, and   that the robot should not rotate itself (if it does,
+  disable `useHeading` as mentioned prior). Also note that the robot will only correct to an imaginary line
+  that runs straight forward from the robot's starting position, meaning that it will not correct in the
+  (original) forward direction. The PID for the translational error is called `translationalPIDF`.
+  If you need to add a feedforward value, use the `translationalPIDFFeedForward` since that will add
+  the feedforward in the direction the robot is trying to move, rather than the feedforward in the
+  PIDF itself, since those will only add the feedforward one way. You can change   the PIDF constants
+  and feedforward values, under the `FollowerConstants` tab in FTC Dashboard.
   To tune the PID, push the robot off the path and see how corrects. You will want to alternate sides
   you push to reduce field wear and tear as well as push with varying power and distance. I would 
   recommend tuning the PID so that it is capable of correcting while minimizing oscillations and still

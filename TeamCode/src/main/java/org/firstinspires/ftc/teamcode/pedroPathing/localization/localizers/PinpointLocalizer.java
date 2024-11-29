@@ -16,35 +16,34 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
  * This is the Pinpoint class. This class extends the Localizer superclass and is a
  * localizer that uses the two wheel odometry set up with the IMU to have more accurate heading
  * readings. The diagram below, which is modified from Road Runner, shows a typical set up.
-         *
-         * The view is from the top of the robot looking downwards.
-         *
-         * left on robot is the y positive direction
-         *
-         * forward on robot is the x positive direction
-         *
-         *    /--------------\
-         *    |     ____     |
-         *    |     ----     |
-         *    | ||           |
-         *    | ||           |  ----> left (y positive)
-         *    |              |
-         *    |              |
-         *    \--------------/
-         *           |
-         *           |
-         *           V
-         *    forward (x positive)
-         * With the pinpoint your readings will be used in mm
-         * to use inches ensure to divide your mm value by 25.4
-         * @author Logan Nash
-         * @author Havish Sripada 12808 - RevAmped Robotics
-         * @author Ethan Doak - Gobilda
-         * @version 1.0, 10/2/2024
+ *
+ * The view is from the top of the robot looking downwards.
+ *
+ * left on robot is the y positive direction
+ *
+ * forward on robot is the x positive direction
+ *
+ *                    forward (x positive)
+ *                                △
+ *                                |
+ *                                |
+ *                         /--------------\
+ *                         |              |
+ *                         |              |
+ *                         |           || |
+ *  left (y positive) <--- |           || |
+ *                         |     ____     |
+ *                         |     ----     |
+ *                         \--------------/
+ * With the pinpoint your readings will be used in mm
+ * to use inches ensure to divide your mm value by 25.4
+ * @author Logan Nash
+ * @author Havish Sripada 12808 - RevAmped Robotics
+ * @author Ethan Doak - Gobilda
+ * @version 1.0, 10/2/2024
  */
 public class PinpointLocalizer extends Localizer {
     private HardwareMap hardwareMap;
-    private Pose startPose;
     private GoBildaPinpointDriver odo;
     private double previousHeading;
     private double totalHeading;
@@ -84,7 +83,7 @@ public class PinpointLocalizer extends Localizer {
 
         setStartPose(setStartPose);
         totalHeading = 0;
-        previousHeading = startPose.getHeading();
+        previousHeading = setStartPose.getHeading();
 
         resetPinpoint();
     }
@@ -96,8 +95,8 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public Pose getPose() {
-        Pose2D pose = odo.getPosition();
-        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), pose.getHeading(AngleUnit.RADIANS));
+        Pose2D rawPose = odo.getPosition();
+        return new Pose(rawPose.getX(DistanceUnit.INCH), rawPose.getY(DistanceUnit.INCH), rawPose.getHeading(AngleUnit.RADIANS));
     }
 
     /**
@@ -125,13 +124,15 @@ public class PinpointLocalizer extends Localizer {
     }
 
     /**
-     * This sets the start pose. Changing the start pose should move the robot as if all its
-     * previous movements were displacing it from its new start pose.
+     * This sets the start pose. Since nobody should be using this after the robot has begun moving,
+     * and due to issues with the PinpointLocalizer, this is functionally the same as setPose(Pose).
      *
      * @param setStart the new start pose
      */
     @Override
-    public void setStartPose(Pose setStart) {startPose = setStart;}
+    public void setStartPose(Pose setStart) {
+        odo.setPosition(new Pose2D(DistanceUnit.INCH, setStart.getX(), setStart.getY(), AngleUnit.RADIANS, setStart.getHeading()));
+    }
 
     /**
      * This sets the current pose estimate. Changing this should just change the robot's current
@@ -141,9 +142,8 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public void setPose(Pose setPose) {
-    resetPinpoint();
-    Pose setPinpointPose = MathFunctions.subtractPoses(setPose, startPose);
-    odo.setPosition(new Pose2D(DistanceUnit.INCH, setPinpointPose.getX(), setPinpointPose.getY(), AngleUnit.RADIANS, setPinpointPose.getHeading()));
+        resetPinpoint();
+        odo.setPosition(new Pose2D(DistanceUnit.INCH, setPose.getX(), setPose.getY(), AngleUnit.RADIANS, setPose.getHeading()));
     }
 
     /**
@@ -152,8 +152,8 @@ public class PinpointLocalizer extends Localizer {
     @Override
     public void update() {
         odo.update();
-    totalHeading += MathFunctions.getSmallestAngleDifference(odo.getHeading(),previousHeading);
-    previousHeading = odo.getHeading();
+        totalHeading += MathFunctions.getSmallestAngleDifference(MathFunctions.normalizeAngle(odo.getHeading()), previousHeading);
+        previousHeading = MathFunctions.normalizeAngle(odo.getHeading());
     }
 
     /**
