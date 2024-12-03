@@ -38,6 +38,7 @@ public class ExampleTeleop_RobotCentric extends OpMode {
     /** This method is called once at the start of the OpMode. **/
     @Override
     public void start() {
+        follower.startTeleopDrive();
     }
 
     /** This is the main loop of the opmode and runs continuously after play **/
