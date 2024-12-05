@@ -163,7 +163,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.scoringClaw();
                     claw.openClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(grabPickup1, /* holdEnd = */ true);
+                    follower.followPath(grabPickup1,true);
                     setPathState(2);
                 }
                 break;
@@ -174,7 +174,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.groundClaw();
                     claw.closeClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
-                    follower.followPath(scorePickup1, /* holdEnd = */ true);
+                    follower.followPath(scorePickup1,true);
                     setPathState(3);
                 }
                 break;
@@ -185,7 +185,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.scoringClaw();
                     claw.openClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(grabPickup2, /* holdEnd = */ true);
+                    follower.followPath(grabPickup2,true);
                     setPathState(4);
                 }
                 break;
@@ -196,7 +196,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.groundClaw();
                     claw.closeClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
-                    follower.followPath(scorePickup2, /* holdEnd = */ true);
+                    follower.followPath(scorePickup2,true);
                     setPathState(5);
                 }
                 break;
@@ -207,7 +207,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.scoringClaw();
                     claw.openClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(grabPickup3, /* holdEnd = */ true);
+                    follower.followPath(grabPickup3,true);
                     setPathState(6);
                 }
                 break;
@@ -218,7 +218,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.groundClaw();
                     claw.closeClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
-                    follower.followPath(scorePickup3, /* holdEnd = */ true);
+                    follower.followPath(scorePickup3, true);
                     setPathState(7);
                 }
                 break;
@@ -229,7 +229,7 @@ public class ExampleBucketAuto extends OpMode {
                     claw.scoringClaw();
                     claw.openClaw();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are parked */
-                    follower.followPath(park, /* holdEnd = */ true);
+                    follower.followPath(park,true);
                     setPathState(8);
                 }
                 break;
